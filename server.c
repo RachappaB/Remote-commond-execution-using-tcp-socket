@@ -4,6 +4,11 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/stat.h>
+#define MAX 1000
 
 #define PORT 8080
 
@@ -46,11 +51,21 @@ int main(int argc, char const *argv[]) {
     while(1) {
         valread = read(new_socket, buffer, 1024);
         printf("%s\n", buffer);
-        memset(buffer, 0, sizeof(buffer));
-        printf("Enter message: ");
-        fgets(buffer, 1024, stdin);
+    //    memset(buffer, 0, sizeof(buffer));
+       printf("Enter message: ");
+      //  fgets(buffer, 1024, stdin);
         send(new_socket, buffer, strlen(buffer), 0);
-        memset(buffer, 0, sizeof(buffer));
+    //    memset(buffer, 0, sizeof(buffer));
+
+
+
+
+        // bzero(buffer, sizeof(buffer));
+        // recvfrom(serverDescriptor, buffer, sizeof(buffer), 0, (struct sockaddr *)&clientAddress, &clientLength);
+        // system(buffer);
+        // printf("Command Executed ... %s ", buffer);
+        // sendto(serverDescriptor, message, sizeof(message), 0, (struct sockaddr *)&clientAddress, clientLength);
+
     }
     return 0;
 }

@@ -4,6 +4,9 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <netinet/in.h>
 
 #define PORT 8080
 
@@ -39,6 +42,15 @@ int main(int argc, char const *argv[]) {
         valread = read(sock, buffer, 1024);
         printf("%s\n", buffer);
      memset(buffer, 0, sizeof(buffer));
+
+
+
+    //    printf("\nCOMMAND FOR EXECUTION ... ");
+    //     fgets(buffer, sizeof(buffer), stdin);
+    //     sendto(serverDescriptor, buffer, sizeof(buffer), 0, (struct sockaddr *)&serverAddress, serverLength);
+    //     printf("\nData Sent !");
+    //     recvfrom(serverDescriptor, message, sizeof(message), 0, (struct sockaddr *)&serverAddress, &serverLength);
+    //     printf("UDP SERVER : %s", message);
     }
     return 0;
 }

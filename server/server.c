@@ -79,7 +79,7 @@ void func(int connfd)
 		write(connfd, buff, sizeof(buff));
 
 		// if msg contains "Exit" then server exit and chat ended.
-		if (strncmp("exit", buff, 4) == 0) {
+		if (strncmp("exit > 1.txt", buff, 4) == 0) {
 			printf("Server Exit...\n");
 			break;
 		}

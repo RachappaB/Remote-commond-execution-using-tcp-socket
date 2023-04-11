@@ -1,0 +1,53 @@
+This code is an example of a simple server program written in C that listens for incoming client connections using TCP/IP socket programming.
+ The server can receive messages from clients, execute a command provided by the client, and send the output of the command back to the client.
+
+Let's go through the main parts of the code:
+
+Header files:
+arduino
+#include <stdio.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h> // read(), write(), close()
+#include <sys/stat.h>
+#include <arpa/inet.h>
+These are the required header files for socket programming in C.
+ They provide the necessary functions and data structures for creating, binding, listening, accepting, and communicating over sockets.
+
+Constants:
+arduino
+#define MAX 800
+#define PORT 8080
+#define SA struct sockaddr
+MAX defines the maximum size of the buffer used for sending and receiving messages. PORT defines the port number on which the server listens for incoming connections. SA is a typedef for struct sockaddr which represents a socket address.
+
+Function some_error:
+void some_error(char *buff)
+This function is called to handle errors when reading a file. It sets a predefined error message "Some error" in the buff buffer.
+
+Function put_data_buff:
+void put_data_buff(char *buff)
+This function reads the contents of a file named "1.txt" and stores it in the buff buffer. It is used to send the contents of the file to the client.
+
+Function func:
+go
+void func(int connfd)
+This function represents the communication between the server and a connected client. It reads messages from the client,
+ executes a command provided by the client by appending it to a filename, sends the output of the command back to the client,
+  and repeats this process until the client sends an "exit > 1.txt" message to exit.
+
+main function:
+csharp
+int main()
+This is the entry point of the server program. It performs the following steps:
+
+Creates a socket using socket() function.
+Binds the socket to an IP address and port number using bind() function.
+Starts listening for incoming connections using listen() function.
+Accepts incoming connections from clients using accept() function.
+Calls the func() function to handle communication with the connected client.
+Closes the socket using close() function after communication is finished.

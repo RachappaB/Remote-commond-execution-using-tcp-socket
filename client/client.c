@@ -1,5 +1,5 @@
-#include <arpa/inet.h> // inet_addr()
-#include <netdb.h>
+#include <arpa/inet.h> // inet_addr()   The arpa/inet.h header file contains definitions for internet operations.
+#include <netdb.h>// network database operations
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

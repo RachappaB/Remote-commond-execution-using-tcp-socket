@@ -1,0 +1,31 @@
+This code is a C program that implements a simple TCP client. It does the following:
+
+- It includes several header files that provide definitions and functions for network programming, such as `arpa/inet.h`, `netdb.h`, `sys/socket.h` and `unistd.h`.
+- It defines some constants for the maximum buffer size (`MAX`), the port number (`PORT`) and the socket address structure (`SA`).
+- It defines a function `func` that takes an integer parameter `sockfd`, which is the file descriptor of the socket connected to the server. The function does the following:
+  - It declares a character array `buff` of size `MAX` to store the messages to and from the server.
+  - It declares an integer variable `n` to keep track of the number of characters in the buffer.
+  - It enters an infinite loop that does the following:
+    - It clears the buffer using the `bzero` function.
+    - It prompts the user to enter a command and reads it from the standard input using a `while` loop and the `getchar` function. It stores the command in the buffer and prints it.
+    - It writes the buffer to the socket using the `write` function.
+    - It clears the buffer again using the `bzero` function.
+    - It reads the response from the socket using the `read` function and stores it in the buffer.
+    - It prints the response from the server using the `printf` function.
+    - It checks if the response is "exit" using the `strncmp` function. If so, it prints a message and breaks out of the loop.
+- It defines a `main` function that does the following:
+  - It declares some variables for the socket file descriptors (`sockfd` and `connfd`), the server address structure (`servaddr`) and the client address structure (`cli`).
+   It also declares a character array `ip` of size 50 to store the IP address of the server.
+  - It creates a socket using the `socket` function with parameters for IPv4 (`AF_INET`),
+   stream (`SOCK_STREAM`) and TCP (`0`). If the socket creation fails, it prints an error message and exits. Otherwise, it prints a success message.
+  - It clears the server address structure using the `bzero` function.
+  - It assigns values to the server address structure fields using dot notation.
+   It sets the family to IPv4 (`AF_INET`). It prompts the user to enter the IP address of the server and reads it using the `scanf` function. 
+   It converts it to network byte order using the `inet_addr` function and assigns it to `sin_addr.s_addr`.
+    It converts the port number to network byte order using the `htons` function and assigns it to `sin_port`.
+  - It connects to the server socket using the `connect` function with parameters for the client socket file descriptor, a pointer to the server address structure and its size. If the connection fails, it prints an error message and exits. Otherwise, it prints a success message.
+  - It calls the `func` function with parameter for the client socket file descriptor to start chatting with the server.
+  - It closes the socket using the `close` function.
+
+The code assumes that there is a TCP server running on another machine that can handle commands from clients and send back responses.
+ The code does not handle any errors or exceptions that may occur during network communication.

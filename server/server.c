@@ -8,7 +8,7 @@
 #include <unistd.h> // read(), write(), close()
 #include <sys/stat.h>
 #include <arpa/inet.h>
-#define MAX 800
+#define MAX 8000
 #define PORT 8080
 #define SA struct sockaddr
 
@@ -29,12 +29,14 @@ void put_data_buff(char *buff)
 {
 	FILE *fp;
 	fp = fopen("1.txt","r");
+	
 
 	if(fp ==NULL)
 	{
 		some_error(buff);
 	}
 	else{
+	
 		int i =0;
 		 char ch;
     while ((ch = fgetc(fp)) != EOF)
@@ -44,12 +46,36 @@ void put_data_buff(char *buff)
 	}
 
 	}
+	fclose(fp);
 }
+
+
+void all_data_buff(char *buff)
+{
+	FILE *fp;
+	fp = fopen("a.txt","a+");
+	
+
+	if(fp ==NULL)
+	{
+		some_error(buff);
+	}
+	else{
+	printf("/n");
+	fputs("\n",fp);
+	fputs(buff,fp);
+	fputs(":=>",fp);
+	}
+	fclose(fp);
+}
+
 // Function designed for chat between client and server.
 void func(int connfd)
 {
 	char buff[MAX];
-	char addstring[] =" > 1.txt";
+	char buff1[MAX];
+	char addstring1[] =" > 1.txt";
+	char addstring[] =" >> a.txt";
 	int n;
 	// infinite loop for chat
 	for (;;) {
@@ -59,14 +85,27 @@ void func(int connfd)
 		read(connfd, buff, sizeof(buff));
 		// print buffer which contains the client contents
 		printf("From client: %s\t To client : ", buff);
+		//copying the code to new buff1
+		all_data_buff(buff);
 		int i =0;
-		for(i ;buff[i] != '\0';i++);
+		for(i ;buff[i] != '\0';i++)
+		{
+			buff1[i] = buff[i];
+		}
+		buff1[i] = '\0';
 		for(int j =0;j<9;j++)
+		{
+			buff1[i+j-1] = addstring1[j];
+		}
+		buff[i+9-1] ='\0';
+		for(int j =0;j<10;j++)
 		{
 			buff[i+j-1] = addstring[j];
 		}
 		buff[i+9-1] ='\0';
-        system(buff);     
+		
+        	system(buff);    
+		system(buff1); 
         printf(" To client : ");
 		bzero(buff, MAX);
 		n = 0;
@@ -79,10 +118,7 @@ void func(int connfd)
 		write(connfd, buff, sizeof(buff));
 
 		// if msg contains "Exit" then server exit and chat ended.
-		if (strncmp("exit > 1.txt", buff, 4) == 0) {
-			printf("Server Exit...\n");
-			break;
-		}
+		
 	}
 }
 
